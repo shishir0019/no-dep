@@ -1,15 +1,15 @@
 <?php
-// helper
-include_once __DIR__ . '/../app/Models/Helper/Connection.php';
-include_once __DIR__ . '/../app/Models/Helper/SQLExecutor.php';
+$GLOBALS['env'] = parse_ini_file('.env');
+include_once __DIR__ . "/../dep/helper/Loader.php";
+include_once __DIR__ . "/../dep/helper/Database.php";
 
-// model
-include_once __DIR__ . '/../app/Models/Helper/Path.php';
-include_once __DIR__ . '/../app/Models/App/User.php';
-include_once __DIR__ . '/../app/Models/App/Category.php';
-include_once __DIR__ . '/../app/Models/App/Post.php';
+$dbname = $env['DB_NAME'];
+$servername = $env['DB_SERVER'];
+$username = $env['DB_USER'];
+$password = $env['DB_PASSWORD'];
 
-// controller
-include_once __DIR__ . '/../app/Controller/UserController.php';
-include_once __DIR__ . '/../app/Controller/CategoryController.php';
-include_once __DIR__ . '/../app/Controller/PostController.php';
+$GLOBALS['db_connection'] = Database::connect($dbname, $servername, $username, $password);
+
+Loader::loadFolder(__DIR__ . '/../app/Tools');
+Loader::loadFolder(__DIR__ . '/../app/Models');
+Loader::loadFolder(__DIR__ . '/../app/Controller');
